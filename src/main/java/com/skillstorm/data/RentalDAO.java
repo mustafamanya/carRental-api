@@ -60,9 +60,7 @@ public class RentalDAO {
 				keys.next(); //only returning one row
 				
 				int id= keys.getInt(1);
-				rental.setId(id);
-				System.out.println(rental.getId());
-				
+				rental.setId(id);				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			};	

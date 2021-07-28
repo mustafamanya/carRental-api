@@ -1,5 +1,8 @@
 package com.skillstorm.RentalTest;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -59,7 +62,13 @@ public class RentalDaoTest {
 	@Test
 	public void TestCreate() {
 		
-		int size=renter.size();
+		int size=renter.size(); //size of database set before addbooking 
+		dao.AddBooking(new Rental("Melon Headss","lax", "2015-07-11", "2016-07-11", "900$"));
+		Set<Rental> renter2=dao.FindAll();
+		int size2= renter2.size();
+		assertEquals(size+1,size2);
+		
+
 		
 		
 		
