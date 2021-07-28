@@ -3,6 +3,7 @@ package com.skillstorm.RentalTest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,6 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.skillstorm.data.RentalDAO;
+import com.skillstorm.model.Rental;
+
 
 public class RentalDaoTest {
 	
@@ -18,6 +22,11 @@ public class RentalDaoTest {
 	private final static String username ="root"; //least privledged
 	private final static String url ="jdbc:mysql://localhost:3306/july_java";
 	private final static String password="root";
+	
+	Set<Rental> renter;
+	RentalDAO dao=new RentalDAO();
+
+
 	
 	
 
@@ -39,16 +48,22 @@ public class RentalDaoTest {
 	
 	@Before 
 	public  void setup(){
-		System.out.println("Set up connection ");
+		renter=dao.FindAll();
+	
+
 		
 		
 	}
 	
 	
 	@Test
-	public void test() {
+	public void TestCreate() {
 		
-		System.out.println("hello");
+		int size=renter.size();
+		
+		
+		
+		
 	}
 	
 }

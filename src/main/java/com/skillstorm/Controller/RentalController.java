@@ -52,10 +52,11 @@ public class RentalController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream requestBody= req.getInputStream();
 		Rental rent= new ObjectMapper().readValue(requestBody, Rental.class);
+		dao.AddBooking(rent);
 		resp.getWriter().print(new ObjectMapper().writeValueAsString(rent));
 		resp.setContentType("application/json");
 		System.out.println(rent);
-		dao.AddBooking(rent);		
+				
 	}
 	
 	// update
@@ -84,5 +85,8 @@ public class RentalController extends HttpServlet {
 		}
 		
 	}
+	
+	
+	
 
 }

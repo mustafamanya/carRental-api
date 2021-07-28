@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,19 +46,22 @@ public class RentalDAO {
 				
 				// 3 statement object
 				String sql= "INSERT into car_rental(renter_name,location,start_date,end_date,amount) values(?, ?, ?, ?, ?);";
-				PreparedStatement stmt= conn.prepareStatement(sql);
+				PreparedStatement stmt= conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				stmt.setString(1, rental.getRenterName());
 				stmt.setString(2, rental.getLocation());
 				stmt.setString(3, rental.getStart_date());
 				stmt.setString(4, rental.getEnd_date());
 				stmt.setString(5, rental.getAmount());
-
-
-	
-				//precomiles sql within java
 				
 				//4  execute update 
 				stmt.executeUpdate();
+				
+				ResultSet keys=stmt.getGeneratedKeys();
+				keys.next(); //only returning one row
+				
+				int id= keys.getInt(1);
+				rental.setId(id);
+				System.out.println(rental.getId());
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -120,7 +124,6 @@ public class RentalDAO {
 					
 					//object relation mapping (Hibernate, sping, jpa, ibaits)
 					Rental renter= new Rental(rs.getInt("id"), rs.getString("renter_name"), rs.getString("location"), rs.getString("start_date"),rs.getString("end_date"), rs.getString("amount"));	
-					System.out.println(renter);
 					return renter;
 				}else {
 					System.out.println(" renter does not exist");
@@ -132,6 +135,45 @@ public class RentalDAO {
 				return null;
 			}
 			
+			
+		}
+		
+		
+		public Set<Rental> FindAll(){
+			Set<Rental> results= new HashSet<>();
+			
+			try(Connection conn=DriverManager.getConnection(url,username,password)){
+				
+				//write sql
+				String sql= "select id, renter_name, location, start_date, end_date, amount from car_rental;";
+				//create prepared statement
+				PreparedStatement stmt= conn.prepareStatement(sql);
+				// rows returned from query.. starts at row 0
+				//execute query 
+				ResultSet rs= stmt.executeQuery();
+				while(rs.next()) {
+					int id=rs.getInt(1);
+					String  renter_name= rs.getNString(2);
+					String location= rs.getNString(3);
+					Date dateObj1= rs.getDate(4);
+					Date dateObj2= rs.getDate(5);	
+					String start_date=dateObj1.toString();
+					String end_date=dateObj2.toString();
+					String amount=rs.getNString(6);
+					Rental renter= new Rental(id,renter_name,location,start_date,end_date,amount);
+					results.add(renter);
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			return results;
 			
 		}
 		
