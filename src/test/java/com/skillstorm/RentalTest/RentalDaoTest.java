@@ -99,9 +99,38 @@ public class RentalDaoTest {
 	
 	// will test for rental 100 
 	@Test
-	public void FindBooking() {
-		System.out.println("test2");
+	public void Remove() {
+		
+		try {
+			System.out.println("Remove test");
+			Connection conn= DriverManager.getConnection(url,username,password);
+			Statement stmt= conn.createStatement();
+			
+			// first adding a booking 
+			dao.AddBooking(new Rental("Melon Headss","lax", "2015-07-11", "2016-07-11", "900$"));
+			
+			// before should not be 1 
+			String sql= "select count(*) from car_rentaltest"; 
+			ResultSet rs= stmt.executeQuery(sql);
 
+
+			rs.next();
+			int rowsBefore = rs.getInt(1);
+			
+			dao.deleteBooking(new Rental(1));
+			
+			ResultSet rs2= stmt.executeQuery(sql);
+			rs2.next();
+			int rowsAfter = rs2.getInt(1);
+			System.out.println(rowsAfter + " "+ rowsBefore);
+			
+			// since Rowbefore is 1 and if remove works Rowafter should be 0. Therefore --RowBefore to see if they are equal.
+			
+			assertEquals(rowsAfter, --rowsBefore);
+			
+		}catch(Exception e) {
+			System.out.print("failed");
+		}
 
 		
 	}
