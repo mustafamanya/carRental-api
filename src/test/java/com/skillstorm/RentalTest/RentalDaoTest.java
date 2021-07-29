@@ -96,7 +96,7 @@ public class RentalDaoTest {
 	public void FindId() {
 		
 		try {
-			System.out.println("Remove test");
+			System.out.println("Find test");
 			Connection conn= DriverManager.getConnection(url,username,password);
 			Statement stmt= conn.createStatement();
 			
@@ -118,6 +118,47 @@ public class RentalDaoTest {
 			System.out.print("failed");
 		
 		}
+	}
+	
+	@Test
+	public void update() {
+		
+		try {
+			System.out.println("update test");
+			Connection conn= DriverManager.getConnection(url,username,password);
+			Statement stmt= conn.createStatement();
+			
+			// first adding a booking 
+			dao.AddBooking(new Rental("Melon Headss","lax", "2015-07-11", "2016-07-11", "900$"));
+			
+			
+			// update booking 
+			dao.updateBooking(new Rental(1,"John cena","San diego", "2020-07-11", "2021-05-11", "700$"));
+			
+			// if update booking works then when we find booking it should be updated.
+			Rental result=dao.Findbooking(1);
+			Rental expected= new Rental(1,"John cena","San diego", "2020-07-11", "2021-05-11", "700$");
+			
+			System.out.println(result);
+			System.out.println(expected);
+			
+			if(expected.equals(result)) {
+				System.out.println(" update works");
+				
+			}else {
+				System.out.println("update failed ");
+				fail();
+			}
+
+			
+			
+			
+		}catch(Exception e) {
+			System.out.print("failed");
+		
+		}
+		
+		
 	}
 	
 	// will test for rental 100 
