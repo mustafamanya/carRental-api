@@ -92,10 +92,33 @@ public class RentalDaoTest {
 	
 	}
 	
-	
-
+	@Test
+	public void FindId() {
 		
-	
+		try {
+			System.out.println("Remove test");
+			Connection conn= DriverManager.getConnection(url,username,password);
+			Statement stmt= conn.createStatement();
+			
+			// first adding a booking 
+			dao.AddBooking(new Rental("Melon Headss","lax", "2015-07-11", "2016-07-11", "900$"));
+			
+			Rental result=dao.Findbooking(1);
+			Rental expected= new Rental(1,"Melon Headss","lax", "2015-07-11", "2016-07-11", "900$");
+			
+			if(expected.equals(result)) {
+				System.out.println(" Find works");
+				
+			}else {
+				System.out.println("Find failed ");
+				fail();
+			}
+			
+		}catch(Exception e) {
+			System.out.print("failed");
+		
+		}
+	}
 	
 	// will test for rental 100 
 	@Test
@@ -135,8 +158,7 @@ public class RentalDaoTest {
 		
 	}
 	
-	@After
-	@Ignore 
+	@After 
 	public void afterTest() {
 		try {
 			Connection conn= DriverManager.getConnection(url,username,password);

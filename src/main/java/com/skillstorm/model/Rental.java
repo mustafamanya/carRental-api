@@ -129,10 +129,12 @@ public class Rental {
 		if (getClass() != obj.getClass())
 			return false;
 		Rental other = (Rental) obj;
-		return amount == other.amount && Objects.equals(end_date, other.end_date) && id == other.id
+		return Objects.equals(amount, other.amount) && Objects.equals(end_date, other.end_date) && id == other.id
 				&& Objects.equals(location, other.location) && Objects.equals(renterName, other.renterName)
 				&& Objects.equals(start_date, other.start_date);
-	} 
+	}
+
+
 	
 	
 
