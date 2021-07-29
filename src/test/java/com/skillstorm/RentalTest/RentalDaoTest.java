@@ -2,10 +2,13 @@ package com.skillstorm.RentalTest;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
 
 import org.junit.After;
@@ -26,34 +29,38 @@ public class RentalDaoTest {
 	private final static String url ="jdbc:mysql://localhost:3306/july_java";
 	private final static String password="root";
 	
-	Set<Rental> renter;
+
+	
 	DaoTest dao=new DaoTest();
 	
-	int id=0;
-
 
 	
-	
-
-
-	@BeforeClass
-	public static void setUpBeforClass() {
+	@Before
+	public void beforeTest() {
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("driver has been loaded");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Something went wrong with driver");
-			e.printStackTrace();
+			String ddl= "create table car_rentaltest (\r\n"
+					+ "	id INT NOT NULL AUTO_INCREMENT ,\r\n"
+					+ "	renter_name VARCHAR(50),\r\n"
+					+ "	location VARCHAR(50),\r\n"
+					+ "	start_date DATE,\r\n"
+					+ "	end_date DATE,\r\n"
+					+ "	amount VARCHAR(50),\r\n"
+					+ "	PRIMARY KEY(id)\r\n"
+					+ ");\r\n"
+					+ "\r\n"
+					+ "\r\n"
+					+ "";
+				Connection conn= DriverManager.getConnection(url,username,password);
+				Statement stmt= conn.createStatement();
+				stmt.executeUpdate(ddl);
+				System.out.println("Test table created");
+					
+			
+		}catch(Exception e) {
+			System.out.println("Table failed");
 		}
 		
-	
-		
-	}
-	
-	@Before 
-	public  void setup(){
-		renter=dao.FindAll();
 		
 		
 	}
@@ -61,36 +68,56 @@ public class RentalDaoTest {
 	
 	@Test
 	public void TestCreate() {
-		System.out.println("Test1");
-
+	
+	try {
+		String sql= "select count(*) from car_rentaltest"; 
+		Connection conn= DriverManager.getConnection(url,username,password);
+		Statement stmt= conn.createStatement();
+		ResultSet rs= stmt.executeQuery(sql);
+		rs.next();
+		int rowsBefore = rs.getInt(1);
 		
-		int size=renter.size(); //size of database set before addbooking 
-		System.out.println(size);
-
 		dao.AddBooking(new Rental("Melon Headss","lax", "2015-07-11", "2016-07-11", "900$"));
-		Set<Rental> renter2=dao.FindAll();
-		int size2= renter2.size();
-		System.out.println(size2);
-
-		assertEquals(size+1,size2);
-				
 		
+		ResultSet rs2= stmt.executeQuery(sql);
+		rs2.next();
+		int rowsAfter = rs2.getInt(1);
+		System.out.println(rowsAfter + " "+ rowsBefore);
+		
+		assertEquals(rowsAfter, ++rowsBefore);
+		
+	}catch(Exception e) {
+		System.out.print("failed");
+	}
+	
 	}
 	
 	
-	@Test
-	public void TestRemove() {
-		System.out.println("Test2");
-		int size=renter.size(); //size of database set before addbooking 
-		System.out.println(size);
-		
 
-		dao.deleteBooking(new Rental(205));
-		Set<Rental> renter2=dao.FindAll();
-		int size2= renter2.size();
-		System.out.println(size2);
-		assertEquals(size-1,size2);
-				
+		
+	
+	
+	// will test for rental 100 
+	@Test
+	public void FindBooking() {
+		System.out.println("test2");
+
+
+		
+	}
+	
+	@After
+	@Ignore 
+	public void afterTest() {
+		try {
+			Connection conn= DriverManager.getConnection(url,username,password);
+			Statement stmt= conn.createStatement();
+			stmt.executeUpdate("drop table car_rentaltest ");
+			System.out.println("Table dropped ");
+			conn.close();
+		}catch(Exception e) {
+			fail();
+		}
 		
 	}
 	

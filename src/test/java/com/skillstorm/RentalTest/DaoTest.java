@@ -58,6 +58,7 @@ public class DaoTest {
 				//4  execute update 
 				stmt.executeUpdate();
 				
+				
 				ResultSet keys=stmt.getGeneratedKeys();
 				keys.next(); //only returning one row
 				
