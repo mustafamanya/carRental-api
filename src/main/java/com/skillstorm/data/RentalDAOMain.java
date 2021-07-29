@@ -19,10 +19,12 @@ public class RentalDAOMain {
 		
 		//dao.updateBooking(new Rental(66,"MusalManMan","SF","2013-7-21", "2016-1-20", "800$"));
 		
-		//Set<Rental> setRental= dao.FindAll();
-		//System.out.println(setRental);
-		//System.out.println(setRental.size());
-		
+			Set<Rental> setRental= dao.FindAll();
+			System.out.println(setRental);
+			Set<Rental> setRental2= dao.FindAll();
+			System.out.println(setRental2);
+
+			System.out.println(setRental.equals(setRental2));
 		
 		
 		

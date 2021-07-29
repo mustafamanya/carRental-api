@@ -27,7 +27,9 @@ public class RentalDaoTest {
 	private final static String password="root";
 	
 	Set<Rental> renter;
-	RentalDAO dao=new RentalDAO();
+	DaoTest dao=new DaoTest();
+	
+	int id=0;
 
 
 	
@@ -52,8 +54,6 @@ public class RentalDaoTest {
 	@Before 
 	public  void setup(){
 		renter=dao.FindAll();
-	
-
 		
 		
 	}
@@ -61,18 +61,40 @@ public class RentalDaoTest {
 	
 	@Test
 	public void TestCreate() {
+		System.out.println("Test1");
+
 		
 		int size=renter.size(); //size of database set before addbooking 
+		System.out.println(size);
+
 		dao.AddBooking(new Rental("Melon Headss","lax", "2015-07-11", "2016-07-11", "900$"));
 		Set<Rental> renter2=dao.FindAll();
 		int size2= renter2.size();
-		assertEquals(size+1,size2);
-		
+		System.out.println(size2);
 
-		
-		
-		
+		assertEquals(size+1,size2);
+				
 		
 	}
+	
+	
+	@Test
+	public void TestRemove() {
+		System.out.println("Test2");
+		int size=renter.size(); //size of database set before addbooking 
+		System.out.println(size);
+		
+
+		dao.deleteBooking(new Rental(205));
+		Set<Rental> renter2=dao.FindAll();
+		int size2= renter2.size();
+		System.out.println(size2);
+		assertEquals(size-1,size2);
+				
+		
+	}
+	
+	
+	
 	
 }

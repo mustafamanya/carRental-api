@@ -36,6 +36,8 @@ public class RentalController extends HttpServlet {
 		String json= new ObjectMapper().writeValueAsString(renter); // converting java object->json
 		System.out.println(json);
 		resp.getWriter().print(json);
+		resp.setContentType("application/json");
+
 		}else{
 			resp.getWriter().print("No renter information found");
 		}
