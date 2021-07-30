@@ -2,9 +2,11 @@ package com.skillstorm.model;
 
 import java.util.Objects;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 //map to database 
 
-public class Rental {
+public class Rental implements Comparable<Rental> {
 	
 	
 	private int id;
@@ -135,8 +137,9 @@ public class Rental {
 	}
 
 
-	
-	
-
+	@Override
+	public int compareTo(Rental o) {
+		return this.id - o.id;
+	}
 
 }

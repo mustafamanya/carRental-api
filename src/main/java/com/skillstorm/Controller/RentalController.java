@@ -2,6 +2,7 @@ package com.skillstorm.Controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,7 +44,9 @@ public class RentalController extends HttpServlet {
 		}
 		
 		}else {
-			resp.getWriter().print("Please Enter an id");
+			Set<Rental>renter= dao.FindAll();
+			String json= new ObjectMapper().writeValueAsString(renter);
+			resp.getWriter().print(json);
 			
 		}
 		

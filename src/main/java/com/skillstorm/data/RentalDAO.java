@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.skillstorm.model.Rental;
 
@@ -21,8 +22,6 @@ public class RentalDAO {
 	private final static String url ="jdbc:mysql://localhost:3306/july_java";
 	private final static String password="root";
 	
-	
-	
 	// Perform CURD: Create, Retrieve, Update, DELETE
 	
 		static {
@@ -33,11 +32,8 @@ public class RentalDAO {
 			} catch (ClassNotFoundException e) {
 				System.out.println("Something went wrong with driver");
 				e.printStackTrace();
-			}
-			
-			
+			}	
 		}
-		
 		
 		public void AddBooking(Rental rental) {
 			// try with resources java 7+, any resource that implements Autoclosable interface
@@ -67,7 +63,6 @@ public class RentalDAO {
 			
 		}
 		
-		
 		public void deleteBooking(Rental rental) {
 			
 			try(Connection conn=DriverManager.getConnection(url,username,password)){
@@ -79,11 +74,9 @@ public class RentalDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			};	
-						
-			
+								
 		}
-		
-		
+	
 		
 		public void updateBooking(Rental rental) {
 			
@@ -104,9 +97,7 @@ public class RentalDAO {
 			
 			
 		}
-		
-		
-		
+			
 		
 		public Rental Findbooking(int id) {
 			
@@ -138,7 +129,7 @@ public class RentalDAO {
 		
 		
 		public Set<Rental> FindAll(){
-			Set<Rental> results= new HashSet<>();
+			Set<Rental> results= new TreeSet<>();
 			
 			try(Connection conn=DriverManager.getConnection(url,username,password)){
 				
@@ -169,14 +160,8 @@ public class RentalDAO {
 				e.printStackTrace();
 			}
 			
-			
-			
 			return results;
 			
 		}
-		
-		
-		
-	
 
 }

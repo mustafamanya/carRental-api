@@ -212,8 +212,7 @@ public class RentalDaoTest {
 		}
 		
 	}
-	
-	
+		
 	
 	
 }

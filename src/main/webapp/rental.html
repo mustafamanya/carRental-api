@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!---- metadata-->
+    <title>Rental api</title>
+    </head>
+    <body>
+        <h1>Rental</h1>
+        <table id='rental-data'>
+            <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
+
+
+        </table>
+    </body>
+
+    <script>
+        // Ajax- asynchrouns javaScript and XML
+        //XHR
+        //closure 
+        window.onload=function(){
+            //1 make an xhr object
+            let xhr= new XMLHttpRequest();
+            // define what happens during the Ajax call
+            xhr.onreadystatechange=function(response){
+                if(xhr.readyState===4){
+                   
+                    var RentalArray=JSON.parse(xhr.responseText)
+                    console.log(RentalArray);
+
+                    RentalArray.forEach(rental => {
+                        RentalTable(rental)
+                        
+                    });
+                    
+                    // dom manipulation code
+        
+                }
+            }
+             // Open chr call (HTTP verb, and the URL)
+        xhr.open('GET','http://localhost:8080/carRental-api/rental');
+        // send
+        xhr.send();
+        }
+        function  RentalTable(rental){
+            console.log('Rental'+ rental)
+            console.log("RentalTable: adding rental to table")
+
+            var tr= document.createElement('tr')
+            var id= document.createElement('td')
+            var name= document.createElement('td')
+            var location= document.createElement('td')
+            var startdate= document.createElement('td')
+            var enddate= document.createElement('td')
+            var amount= document.createElement('td')
+
+            id.innerText=rental.id;
+            name.innerText=rental.renterName;
+            location.innerText=rental.location
+            startdate.innerText=rental.start_date
+            enddate.innerText=rental.end_date
+            amount.innerText=rental.amount  // properties of json object store in html
+            tr.appendChild(id);
+            tr.appendChild(name);
+            tr.appendChild(location);
+            tr.appendChild(startdate);
+            tr.appendChild(enddate);
+            tr.appendChild(amount);
+            document.getElementById('rental-data').appendChild(tr)
+
+
+        }
+       
+    </script>
+</html>
