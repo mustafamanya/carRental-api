@@ -2,42 +2,40 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!---- metadata-->
-    <title>Rental api</title>
+        <title>Rental api</title>
     </head>
     <body style="background-color:grey;">
         <h1>Rental</h1>
         
-    <div class= "container-fluid">
-        <div class= "row">
-            <div class="col-lg-6">
-                <form  id = "add-rental-form">
+        <div class= "container-fluid">
+            <div class= "row">
+                <div class="col-lg-6">
+                    <form  id = "add-rental-form">
+                        <div class="form-group">
+                            <div><label for ="renter-name">Renter name</label><input type="text" id="renter-name" name="renter-name"></div>
+                        </div>
+                        <div class="form-group">
+                            <div><label for ="renter-location">Location</label><input type="text" id="renter-location" name="renter-location"></div>
+                        </div>
                     <div class="form-group">
-                        <div><label for ="renter-name">Renter name</label><input type="text" id="renter-name" name="renter-name"></div>
+                        <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
                     </div>
                     <div class="form-group">
-                        <div><label for ="renter-location">Location</label><input type="text" id="renter-location" name="renter-location"></div>
+                        <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
                     </div>
-                <div class="form-group">
-                    <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
+                    <div class="form-group">
+                        <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
+                    </div>
+                    <div><input type="submit" id="add-renter" value="Add Renter"></div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
+                <div class ="col-lg-6">
+                    <table id='rental-data' class= "table table-dark">
+                        <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
-                </div>
-                <div><input type="submit" id="add-renter" value="Add Renter"></div>
-                </form>
-            </div>
-            <div class ="col-lg-6">
-                <table id='rental-data' class= "table table-dark">
-                    <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
-                </table>
             </div>
         </div>
-    </div>
 
     </body>
 
