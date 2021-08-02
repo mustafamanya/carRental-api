@@ -6,28 +6,42 @@
     <!---- metadata-->
     <title>Rental api</title>
     </head>
-    <body>
-        
-
-        
-
-        
+    <body style="background-color:grey;">
         <h1>Rental</h1>
+        
+    <div class= "container-fluid">
+        <div class= "row">
+            <div class="col-lg-6">
+                <form  id = "add-rental-form">
+                    <div class="form-group">
+                        <div><label for ="renter-name">Renter name</label><input type="text" id="renter-name" name="renter-name"></div>
+                    </div>
+                    <div class="form-group">
+                        <div><label for ="renter-location">Location</label><input type="text" id="renter-location" name="renter-location"></div>
+                    </div>
+                <div class="form-group">
+                    <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
+                </div>
+                <div class="form-group">
+                    <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
+                </div>
+                <div class="form-group">
+                    <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
+                </div>
+                <div><input type="submit" id="add-renter" value="Add Renter"></div>
+                </form>
+            </div>
+            <div class ="col-lg-6">
+                <table id='rental-data' class= "table table-dark">
+                    <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
-
-        <form  id = "add-rental-form">
-        <div><label for ="renter-name">Renter name</label><input type="text" id="renter-name" name="renter-name"></div>
-        <div><label for ="renter-location">Location</label><input type="text" id="renter-location" name="renter-location"></div>
-        <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
-        <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
-        <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
-        <div><input type="submit" id="add-renter" value="Add Renter"></div>
-        </form>
-
-        <table id='rental-data' class="container-fluid">
-            <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
-        </table>
     </body>
+
+
 
     <script>
         // Ajax- asynchrouns javaScript and XML
