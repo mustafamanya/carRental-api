@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <!---- metadata-->
     <title>Rental api</title>
     </head>
     <body>
+        
+
+        
+
+        
         <h1>Rental</h1>
-        <table id='rental-data'>
+
+
+        <form  id = "add-rental-form">
+        <div><label for ="renter-name">Renter name</label><input type="text" id="renter-name" name="renter-name"></div>
+        <div><label for ="renter-location">Location</label><input type="text" id="renter-location" name="renter-location"></div>
+        <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
+        <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
+        <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
+        <div><input type="submit" id="add-renter" value="Add Renter"></div>
+        </form>
+
+        <table id='rental-data' class="container-fluid">
             <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
-
-
         </table>
     </body>
 
@@ -17,6 +33,47 @@
         // Ajax- asynchrouns javaScript and XML
         //XHR
         //closure 
+        document.getElementById("add-rental-form").addEventListener('submit', function(event){
+            event.preventDefault(); // prevent default from action from happening
+
+            // callback function: what happens when the even fires
+            var name_on_form = document.getElementById('renter-name').value;
+            var location_on_form = document.getElementById('renter-location').value;
+            var startdate_on_form = document.getElementById('renter-start_date').value;
+            var enddate_on_form = document.getElementById('renter-end_date').value;
+            var amount_on_form = document.getElementById('renter-amount').value;
+
+            // es6- object literal syntax to create JSON object on the form
+
+            var rental = {
+                renterName: name_on_form,
+                location :location_on_form,
+                start_date: startdate_on_form,
+                end_date: enddate_on_form,
+                amount: amount_on_form
+            }; 
+            console.log(rental)
+            var xhr= new XMLHttpRequest();
+
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState===4 && xhr.status===200){
+                   console.log('Success')
+                   var UpdateRental= JSON.parse(xhr.responseText)
+                   RentalTable(UpdateRental);
+
+                }
+            }
+            xhr.open('POST','http://localhost:8080/carRental-api/rental');
+            xhr.send(JSON.stringify(rental));
+
+
+        });
+
+
+
+
+
+
         window.onload=function(){
             //1 make an xhr object
             let xhr= new XMLHttpRequest();
@@ -24,8 +81,8 @@
             xhr.onreadystatechange=function(response){
                 if(xhr.readyState===4){
                    
+
                     var RentalArray=JSON.parse(xhr.responseText)
-                    console.log(RentalArray);
 
                     RentalArray.forEach(rental => {
                         RentalTable(rental)
@@ -36,11 +93,14 @@
         
                 }
             }
+
+
              // Open chr call (HTTP verb, and the URL)
         xhr.open('GET','http://localhost:8080/carRental-api/rental');
         // send
         xhr.send();
         }
+       
         function  RentalTable(rental){
             console.log('Rental'+ rental)
             console.log("RentalTable: adding rental to table")

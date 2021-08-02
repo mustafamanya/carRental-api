@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.Renderer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skillstorm.data.RentalDAO;
@@ -29,6 +30,7 @@ public class RentalController extends HttpServlet {
 		
 		
 		if(req.getParameter("id") != null) {
+			
 		String param= req.getParameter("id");
 		int id= Integer.parseInt(param);
 		Rental renter= dao.Findbooking(id);
