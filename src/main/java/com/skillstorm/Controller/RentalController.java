@@ -82,11 +82,15 @@ public class RentalController extends HttpServlet {
 	// delete booking 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getParameter("delete") !=null) {
+		if(req.getParameter("id") !=null) {
 		
-		String param=req.getParameter("delete");
+		String param=req.getParameter("id");
 		int id= Integer.parseInt(param);
-		dao.deleteBooking(new Rental(id));
+		Rental rental=new Rental(id);
+		System.out.println(rental);
+		dao.deleteBooking(rental);
+		resp.getWriter().print(new ObjectMapper().writeValueAsString(rental));
+
 		}else {
 			resp.getWriter().print("Please Enter an id");
 		}

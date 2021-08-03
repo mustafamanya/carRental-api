@@ -13,27 +13,30 @@
 		  <a href="Update.html">UpdateBooking</a>
 		  <a href="Delete.html">DeleteBooking</a>
 		</div>
-        <h1>Rental</h1>
+        <h1>Update Rental</h1>
 		        <div class= "container-fluid">
             <div class= "row">
                 <div class="col-lg-6">
                     <form  id = "add-rental-form">
+                        <div class="form-group">
+                            <div><label for ="renter-id">Renter ID</label><input type="text" id="renter-id" name="renter-id"></div>
+                        </div>
                         <div class="form-group">
                             <div><label for ="renter-name">Renter name</label><input type="text" id="renter-name" name="renter-name"></div>
                         </div>
                         <div class="form-group">
                             <div><label for ="renter-location">Location</label><input type="text" id="renter-location" name="renter-location"></div>
                         </div>
-                         <div class="form-group">
-                            <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
-                        </div>
-                        <div class="form-group">
-                            <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
-                        </div>
-                        <div class="form-group">
-                            <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
-                        </div>
-                    <div><input type="submit" id="add-renter" value="Add Renter"></div>
+                    <div class="form-group">
+                        <div><label for ="renter-start_date">start_date</label><input type="text" id="renter-start_date" name="renter-start_date"></div>
+                    </div>
+                    <div class="form-group">
+                        <div><label for ="renter-end_date">end_date</label><input type="text" id="renter-end_date" name="renter-end_date"></div>
+                    </div>
+                    <div class="form-group">
+                        <div><label for ="renter-amount">amount</label><input type="text" id="renter-amount" name="renter-amount"></div>
+                    </div>
+                    <div><input type="submit" id="add-renter" value="Update Renter"></div>
                     </form>
                 </div>
                 <div class ="col-lg-6">
@@ -56,6 +59,7 @@
             event.preventDefault(); // prevent default from action from happening
 
             // callback function: what happens when the even fires
+            var id_on_form = document.getElementById('renter-id').value;
             var name_on_form = document.getElementById('renter-name').value;
             var location_on_form = document.getElementById('renter-location').value;
             var startdate_on_form = document.getElementById('renter-start_date').value;
@@ -65,6 +69,7 @@
             // es6- object literal syntax to create JSON object on the form
 
             var rental = {
+                id:id_on_form,
                 renterName: name_on_form,
                 location :location_on_form,
                 start_date: startdate_on_form,
@@ -81,9 +86,12 @@
                    RentalTable(UpdateRental);
 
                 }
+
+
             }
-            xhr.open('POST','http://localhost:8080/carRental-api/rental');
+            xhr.open('PUT','http://localhost:8080/carRental-api/rental');
             xhr.send(JSON.stringify(rental));
+
 
 
         });
