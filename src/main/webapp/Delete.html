@@ -2,14 +2,14 @@
     <head>
         <link rel="stylesheet" href="Nav.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="Styles.css">
 
     </head>
     <body style="background-color:grey;">
 
         <div class="topnav">
             <a class="active" href="rental.html">Home</a>
-            <a href="#findId">FindId</a>
+            <a href="FindId.html">FindId</a>
             <a href="Update.html">UpdateBooking</a>
             <a href="Delete.html">DeleteBooking</a>
         </div>
@@ -51,8 +51,9 @@
             xhr.onreadystatechange=function(){
                 if(xhr.readyState===4 && xhr.status===200){
                    console.log(xhr.responseText)
-                   RentalTable()
-
+                   var Table= document.getElementById("rental-data")
+                   Table.innerHTML="";
+                   updatedTabel();
                    
                     
                 }
@@ -61,8 +62,6 @@
                 xhr.open('DELETE','http://localhost:8080/carRental-api/rental?id='.concat(rental.id));
                 console.log(rental.id)
                 xhr.send(rental.id);
-
-                
 
 
             
@@ -123,6 +122,35 @@
 
 
         }
+
+
+            function updatedTabel(){
+
+
+                    let xhr= new XMLHttpRequest();
+                    // define what happens during the Ajax call
+                    xhr.onreadystatechange=function(response){
+                        if(xhr.readyState===4){
+                        
+
+                            var RentalArray=JSON.parse(xhr.responseText)
+
+                            RentalArray.forEach(rental => {
+                                RentalTable(rental)
+                                
+                            });
+                            
+                            // dom manipulation code
+
+                        }
+                    }
+                    // Open chr call (HTTP verb, and the URL)
+                    xhr.open('GET','http://localhost:8080/carRental-api/rental');
+                    // send
+                    xhr.send();
+
+            }
+
 
 
 
