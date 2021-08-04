@@ -3,8 +3,6 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="Nav.css">
-        <link rel="stylesheet" href="Styles.css">
-
         <title>Rental api</title>
     </head>
     <body style="background-color:grey;">
@@ -15,29 +13,28 @@
 		  <a href="Update.html">UpdateBooking</a>
 		  <a href="Delete.html">DeleteBooking</a>
 		</div>
-        
-        <div class="container-fluid">
-            <h1>All Rental's</h1>
+        <h1>Update Rental</h1>
 
-
-            <div class="row">
-                <div class="col-lg-4">
-                    <form  id = "add-rental-form">
-                        <div><label for ="renter-name">Name</label><input class="form-control" type="text" id="renter-name" name="renter-name"></div>
-                        <div><label for ="renter-location">Location</label><input class="form-control" type="text" id="renter-location" name="renter-location"></div>
-                        <div><label for ="renter-start_date">Start</label><input class="form-control" type="text" id="renter-start_date" name="renter-start_date"></div>
-                        <div><label for ="renter-end_date">End</label><input class="form-control" type="text" id="renter-end_date" name="renter-end_date"></div>
-                        <div><label for ="renter-amount">Amount</label><input class="form-control" type="text" id="renter-amount" name="renter-amount"></div>
-                        <div class= "SumbitButton"><input type="submit" id="add-renter" value="Add Renter"></div>
-                    </form>
-                </div>
-                <div class ="col-lg-8">
-                    <table id='rental-data' class= "table table-dark">
-                        <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
-                    </table>
-                </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <form  id = "add-rental-form">
+                    <div><label for ="renter-id">Renter ID</label><input class="form-control" type="text" id="renter-id" name="renter-id"></div>
+                    <div><label for ="renter-name">Name</label><input class="form-control" type="text" id="renter-name" name="renter-name"></div>
+                    <div><label for ="renter-location">Location</label><input class="form-control" type="text" id="renter-location" name="renter-location"></div>
+                    <div><label for ="renter-start_date">Start</label><input class="form-control" type="text" id="renter-start_date" name="renter-start_date"></div>
+                    <div><label for ="renter-end_date">End</label><input class="form-control" type="text" id="renter-end_date" name="renter-end_date"></div>
+                    <div><label for ="renter-amount">Amount</label><input class="form-control" type="text" id="renter-amount" name="renter-amount"></div>
+                    <div class= "SumbitButton"><input type="submit" id="Update-renter" value="Update Renter"></div>
+                </form>
+            </div>
+            <div class ="col-lg-8">
+                <table id='rental-data' class= "table table-dark">
+                    <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
+                </table>
             </div>
         </div>
+    </div>
+
 
     </body>
 
@@ -51,6 +48,7 @@
             event.preventDefault(); // prevent default from action from happening
 
             // callback function: what happens when the even fires
+            var id_on_form = document.getElementById('renter-id').value;
             var name_on_form = document.getElementById('renter-name').value;
             var location_on_form = document.getElementById('renter-location').value;
             var startdate_on_form = document.getElementById('renter-start_date').value;
@@ -60,6 +58,7 @@
             // es6- object literal syntax to create JSON object on the form
 
             var rental = {
+                id:id_on_form,
                 renterName: name_on_form,
                 location :location_on_form,
                 start_date: startdate_on_form,
@@ -73,12 +72,18 @@
                 if(xhr.readyState===4 && xhr.status===200){
                    console.log('Success')
                    var UpdateRental= JSON.parse(xhr.responseText)
-                   RentalTable(UpdateRental);
-
+                   console.log(UpdateRental)
+                   var Table= document.getElementById("rental-data")
+                   Table.innerHTML="";
+                   updatedTabel();
+                  
                 }
+
+
             }
-            xhr.open('POST','http://localhost:8080/carRental-api/rental');
+            xhr.open('PUT','http://localhost:8080/carRental-api/rental');
             xhr.send(JSON.stringify(rental));
+
 
 
         });
@@ -110,6 +115,36 @@
         // send
         xhr.send();
         }
+
+        function updatedTabel(){
+
+
+            let xhr= new XMLHttpRequest();
+            // define what happens during the Ajax call
+            xhr.onreadystatechange=function(response){
+                if(xhr.readyState===4){
+                   
+
+                    var RentalArray=JSON.parse(xhr.responseText)
+
+                    RentalArray.forEach(rental => {
+                        RentalTable(rental)
+                        
+                    });
+                    
+                    // dom manipulation code
+        
+                }
+            }
+             // Open chr call (HTTP verb, and the URL)
+        xhr.open('GET','http://localhost:8080/carRental-api/rental');
+        // send
+        xhr.send();
+
+        }
+
+
+        
        
         function  RentalTable(rental){
             console.log('Rental'+ rental)
@@ -136,6 +171,7 @@
             tr.appendChild(enddate);
             tr.appendChild(amount);
             document.getElementById('rental-data').appendChild(tr)
+
 
         }
        
