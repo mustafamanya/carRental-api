@@ -24,7 +24,7 @@
                     <div><label for ="renter-start_date">Start</label><input class="form-control" type="text" id="renter-start_date" name="renter-start_date"></div>
                     <div><label for ="renter-end_date">End</label><input class="form-control" type="text" id="renter-end_date" name="renter-end_date"></div>
                     <div><label for ="renter-amount">Amount</label><input class="form-control" type="text" id="renter-amount" name="renter-amount"></div>
-                    <div class= "SumbitButton"><input type="submit" id="Update-renter" value="Add Renter"></div>
+                    <div class= "SumbitButton"><input type="submit" id="Update-renter" value="Update Renter"></div>
                 </form>
             </div>
             <div class ="col-lg-8">
@@ -136,14 +136,11 @@
         
                 }
             }
-
-
              // Open chr call (HTTP verb, and the URL)
         xhr.open('GET','http://localhost:8080/carRental-api/rental');
         // send
         xhr.send();
 
-        
         }
 
 
