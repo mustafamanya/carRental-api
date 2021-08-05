@@ -6,6 +6,13 @@
         <link rel="stylesheet" href="Styles.css">
 
         <title>Rental api</title>
+
+        <style>
+            .grey-button{
+                background-color: #333;
+            }
+
+        </style>
     </head>
     <body style="background-color:grey;">
         
@@ -17,18 +24,18 @@
 		</div>
         
         <div class="container-fluid">
-            <h1>All Rental's</h1>
+            <h1>Car Rental</h1>
 
 
             <div class="row">
                 <div class="col-lg-4">
                     <form  id = "add-rental-form">
-                        <div><label for ="renter-name">Name</label><input class="form-control" type="text" id="renter-name" name="renter-name"></div>
-                        <div><label for ="renter-location">Location</label><input class="form-control" type="text" id="renter-location" name="renter-location"></div>
-                        <div><label for ="renter-start_date">Start</label><input class="form-control" type="text" id="renter-start_date" name="renter-start_date"></div>
-                        <div><label for ="renter-end_date">End</label><input class="form-control" type="text" id="renter-end_date" name="renter-end_date"></div>
-                        <div><label for ="renter-amount">Amount</label><input class="form-control" type="text" id="renter-amount" name="renter-amount"></div>
-                        <div class= "SumbitButton"><input type="submit" id="add-renter" value="Add Renter"></div>
+                        <div><label class="form-label" for ="renter-name">Name</label><input class="form-control" type="text" id="renter-name" name="renter-name"></div>
+                        <div><label class="form-label" for ="renter-location">Location</label><input class="form-control" type="text" id="renter-location" name="renter-location"></div>
+                        <div><label class="form-label" for ="renter-start_date">Start</label><input class="form-control" type="text" id="renter-start_date" name="renter-start_date"></div>
+                        <div><label class="form-label" for ="renter-end_date">End</label><input class="form-control" type="text" id="renter-end_date" name="renter-end_date"></div>
+                        <div><label class="form-label" for ="renter-amount">Amount</label><input class="form-control" type="text" id="renter-amount" name="renter-amount"></div>
+                        <div class= "SumbitButton"><input class="btn btn-primary grey-button" type="submit" id="add-renter" value="Add Renter"></div>
                     </form>
                 </div>
                 <div class ="col-lg-8">

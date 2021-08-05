@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="Nav.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="Styles.css">
+
+        
+        <style>
+            .grey-button{
+                background-color: #333;
+            }
+
+        </style>
+    </head>
+    <body style="background-color:grey;">
+        
+        <div class="topnav">
+            <a class="active" href="rental.html">Home</a>
+            <a href="FindId.html">FindId</a>
+            <a href="Update.html">UpdateBooking</a>
+            <a href="Delete.html">DeleteBooking</a>
+        </div>
+        
+        <h1>Find Rental</h1>
+        <div>
+            <form id= "Find-rental-form">
+                    <div><label for ="renter-id">Renter Id</label><input class="form-control" type="number" id="renter-id" name="renter-id"></div>
+                    <div><input class="btn btn-primary grey-button" type="submit" id="Find-renter" value="Find Renter"></div>
+                
+            </form>
+            <div>
+                <table id='rental-data' class= "table table-dark">
+                    <tr><th>ID</th><th>RenterName</th><th>Location</th><th>StartDate</th><th>EndDate</th><th>Amount</th></tr>
+                </table>
+            </div>
+        </div>
+    </body >
+
+    <script>
+
+document.getElementById("Find-rental-form").addEventListener('submit',function(event){
+            event.preventDefault();
+            var id_on_form=document.getElementById('renter-id').value;
+
+            var rental={
+                id:id_on_form
+            }
+            console.log(rental)
+            var xhr=new XMLHttpRequest();
+
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState===4 && xhr.status===200){
+                   console.log(xhr.responseText)
+                   var UpdateRental= JSON.parse(xhr.responseText)
+                   console.log(UpdateRental)
+
+                   RentalTable(UpdateRental)
+
+                }
+            }
+
+                xhr.open('GET','http://localhost:8080/carRental-api/rental?id='.concat(rental.id));
+                console.log(rental.id)
+                xhr.send(rental.id);
+
+            
+        });
+            function  RentalTable(rental){
+                console.log('Rental'+ rental)
+                console.log("RentalTable: adding rental to table")
+
+                var tr= document.createElement('tr')
+                var id= document.createElement('td')
+                var name= document.createElement('td')
+                var location= document.createElement('td')
+                var startdate= document.createElement('td')
+                var enddate= document.createElement('td')
+                var amount= document.createElement('td')
+
+                id.innerText=rental.id;
+                name.innerText=rental.renterName;
+                location.innerText=rental.location
+                startdate.innerText=rental.start_date
+                enddate.innerText=rental.end_date
+                amount.innerText=rental.amount  // properties of json object store in html
+                tr.appendChild(id);
+                tr.appendChild(name);
+                tr.appendChild(location);
+                tr.appendChild(startdate);
+                tr.appendChild(enddate);
+                tr.appendChild(amount);
+                document.getElementById('rental-data').appendChild(tr)
+        }
+
+    </script>
+</html>

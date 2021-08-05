@@ -70,6 +70,7 @@ public class RentalDaoTest {
 	public void TestCreate() {
 	
 	try {
+		System.out.println("Make new rental");
 		String sql= "select count(*) from car_rentaltest"; 
 		Connection conn= DriverManager.getConnection(url,username,password);
 		Statement stmt= conn.createStatement();
@@ -82,7 +83,6 @@ public class RentalDaoTest {
 		ResultSet rs2= stmt.executeQuery(sql);
 		rs2.next();
 		int rowsAfter = rs2.getInt(1);
-		System.out.println(rowsAfter + " "+ rowsBefore);
 		
 		assertEquals(rowsAfter, ++rowsBefore);
 		
@@ -96,7 +96,7 @@ public class RentalDaoTest {
 	public void FindId() {
 		
 		try {
-			System.out.println("Find test");
+			System.out.println("Find renter");
 			Connection conn= DriverManager.getConnection(url,username,password);
 			Statement stmt= conn.createStatement();
 			
@@ -107,7 +107,7 @@ public class RentalDaoTest {
 			Rental expected= new Rental(1,"Melon Headss","lax", "2015-07-11", "2016-07-11", "900$");
 			
 			if(expected.equals(result)) {
-				System.out.println(" Find works");
+				
 				
 			}else {
 				System.out.println("Find failed ");
@@ -124,7 +124,7 @@ public class RentalDaoTest {
 	public void update() {
 		
 		try {
-			System.out.println("update test");
+			System.out.println("update renter");
 			Connection conn= DriverManager.getConnection(url,username,password);
 			Statement stmt= conn.createStatement();
 			
@@ -139,8 +139,7 @@ public class RentalDaoTest {
 			Rental result=dao.Findbooking(1);
 			Rental expected= new Rental(1,"John cena","San diego", "2020-07-11", "2021-05-11", "700$");
 			
-			System.out.println(result);
-			System.out.println(expected);
+			
 			
 			if(expected.equals(result)) {
 				System.out.println(" update works");
@@ -166,7 +165,7 @@ public class RentalDaoTest {
 	public void Remove() {
 		
 		try {
-			System.out.println("Remove test");
+			System.out.println("Remove renter");
 			Connection conn= DriverManager.getConnection(url,username,password);
 			Statement stmt= conn.createStatement();
 			
@@ -186,7 +185,6 @@ public class RentalDaoTest {
 			ResultSet rs2= stmt.executeQuery(sql);
 			rs2.next();
 			int rowsAfter = rs2.getInt(1);
-			System.out.println(rowsAfter + " "+ rowsBefore);
 			
 			// since Rowbefore is 1 and if remove works Rowafter should be 0. Therefore --RowBefore to see if they are equal.
 			
