@@ -24,7 +24,7 @@
         <h1>Find Rental</h1>
         <div>
             <form id= "Find-rental-form">
-                    <div><label for ="renter-id">Renter Id</label><input class="form-control" type="number" id="renter-id" name="renter-id"></div>
+                    <div><label class="form-label" for ="renter-id">Renter Id</label><input class="form-control" type="number" id="renter-id" name="renter-id"></div>
                     <div><input class="btn btn-primary grey-button" type="submit" id="Find-renter" value="Find Renter"></div>
                 
             </form>
@@ -48,14 +48,18 @@ document.getElementById("Find-rental-form").addEventListener('submit',function(e
             console.log(rental)
             var xhr=new XMLHttpRequest();
 
+
             xhr.onreadystatechange=function(){
                 if(xhr.readyState===4 && xhr.status===200){
-                   console.log(xhr.responseText)
+                   console.log("xhr.responseText"+xhr.responseText)
+                   if(xhr.responseText==="No renter information found"){
+                       window.alert("No renter with this id");
+                   }else{
                    var UpdateRental= JSON.parse(xhr.responseText)
-                   console.log(UpdateRental)
+                   console.log("returned value"+UpdateRental);
 
                    RentalTable(UpdateRental)
-
+                   }
                 }
             }
 

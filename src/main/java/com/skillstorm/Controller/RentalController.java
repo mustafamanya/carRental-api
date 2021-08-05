@@ -58,7 +58,7 @@ public class RentalController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		InputStream requestBody= req.getInputStream();
-		Rental rent= new ObjectMapper().readValue(requestBody, Rental.class);
+		Rental rent= new ObjectMapper().readValue(requestBody, Rental.class); //convert to java object
 		dao.AddBooking(rent);
 		resp.getWriter().print(new ObjectMapper().writeValueAsString(rent));
 		resp.setContentType("application/json");
