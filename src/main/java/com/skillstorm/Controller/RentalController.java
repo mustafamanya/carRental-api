@@ -14,11 +14,14 @@ import javax.swing.Renderer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skillstorm.data.RentalDAO;
 import com.skillstorm.model.Rental;
+import com.skillstorm.services.RentalServices;
 
 @WebServlet (urlPatterns= "/rental")
 public class RentalController extends HttpServlet {
 	
 	
+	
+	RentalServices rentalservice= new RentalServices();
 	RentalDAO dao=new RentalDAO();
 
 	
@@ -28,41 +31,16 @@ public class RentalController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		doDispatch(req,resp);
 		
-		if(req.getParameter("id") != null) {
-			
-		String param= req.getParameter("id");
-		int id= Integer.parseInt(param);
-		Rental renter= dao.Findbooking(id);
-		
-		if( renter != null){
-		String json= new ObjectMapper().writeValueAsString(renter); // converting java object->json
-		System.out.println(json);
-		resp.getWriter().print(json);
-		resp.setContentType("application/json");
-
-		}else{
-			resp.getWriter().print("No renter information found");
-		}
-		
-		}else {
-			Set<Rental>renter= dao.FindAll();
-			String json= new ObjectMapper().writeValueAsString(renter);
-			resp.getWriter().print(json);
-			
-		}
 		
 	}
 	
 	// add booking //must add getId like he did in create2
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		InputStream requestBody= req.getInputStream();
-		Rental rent= new ObjectMapper().readValue(requestBody, Rental.class);
-		dao.AddBooking(rent);
-		resp.getWriter().print(new ObjectMapper().writeValueAsString(rent));
-		resp.setContentType("application/json");
-		System.out.println(rent);
+		doDispatch(req,resp);
+
 				
 	}
 	
@@ -70,34 +48,107 @@ public class RentalController extends HttpServlet {
 	
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		InputStream requestBody= req.getInputStream();
-		Rental rent= new ObjectMapper().readValue(requestBody, Rental.class);
-		resp.getWriter().print(new ObjectMapper().writeValueAsString(rent));
-		resp.setContentType("application/json");
-		System.out.println(rent);
-		dao.updateBooking(rent);
+		doDispatch(req,resp);
+
+		
 		
 	}
 	
 	// delete booking 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getParameter("id") !=null) {
-		
-		String param=req.getParameter("id");
-		int id= Integer.parseInt(param);
-		Rental rental=new Rental(id);
-		System.out.println(rental);
-		dao.deleteBooking(rental);
-		resp.getWriter().print(new ObjectMapper().writeValueAsString(rental));
+		doDispatch(req,resp);
 
-		}else {
-			resp.getWriter().print("Please Enter an id");
-		}
+		
+	}
+	
+	public void doDispatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String requestURI = req.getRequestURI();
+		requestURI = requestURI.replace(this.getServletContext().getContextPath(), "");
+		String method= req.getMethod();
+		System.out.println(requestURI);
+		
+		ObjectMapper mapper= new ObjectMapper();
+		
+		
+		switch(method) {
+		
+		
+		case "GET":
+			if(req.getParameter("id")!=null) {
+			String param= req.getParameter("id");
+			int id= Integer.parseInt(param);
+			Rental renter= rentalservice.FindRentalById(id);
+			if(renter!=null) {
+			String json= new ObjectMapper().writeValueAsString(renter);
+			resp.getWriter().print(json);
+			resp.setContentType("application/json");
+			}else {
+				resp.getWriter().print("no renter with that id found");
+				
+			}
+			
+			}else {
+				
+				Set<Rental>renter= rentalservice.allRental();
+				String json= new ObjectMapper().writeValueAsString(renter);
+				resp.getWriter().print(json);
+				
+				
+				
+			}
+			
+		case "POST":
+			InputStream requestBody= req.getInputStream();
+			Rental rent= new ObjectMapper().readValue(requestBody, Rental.class);
+			rentalservice.create(rent);
+			resp.getWriter().print(new ObjectMapper().writeValueAsString(rent));
+			resp.setContentType("application/json");
+			System.out.println(rent);
+			
+			
+		
+		
+		case "PUT":
+			
+			InputStream requestBody2= req.getInputStream();
+			Rental rent2= new ObjectMapper().readValue(requestBody2, Rental.class);
+			resp.getWriter().print(new ObjectMapper().writeValueAsString(rent2));
+			resp.setContentType("application/json");
+			System.out.println(rent2);
+			rentalservice.create(rent2);
+
+		
+		
+		
+		
+		
+		case "DELETE":
+			
+			if(req.getParameter("id") !=null) {
+				
+				String param=req.getParameter("id");
+				int id= Integer.parseInt(param);
+				Rental rental=new Rental(id);
+				System.out.println(rental);
+				rentalservice.delete(rental);
+				resp.getWriter().print(new ObjectMapper().writeValueAsString(rental));
+
+				}else {
+					resp.getWriter().print("Please Enter an id");
+				}
+			
+		
+		
 		
 	}
 	
 	
+
+	
+	
+	
 	
 
+}
 }
